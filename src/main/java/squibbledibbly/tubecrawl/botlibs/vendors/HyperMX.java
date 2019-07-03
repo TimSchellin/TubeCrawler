@@ -14,36 +14,59 @@ public class HyperMX {
     Random r = new Random();
 
     private static String yesNoQualifier = "I prefer not to answer";
-
+    private static String prosceniumQualifier = "proscenium";
     private static String yahoo_qualifier;
 
     public static void start (WebDriver driver) {
-        filterIntro(driver);
-        watchLoop(driver);
+        decideSequence(driver);
+        //watchLoop(driver);
+    }
+
+    public static void decideSequence(WebDriver driver){
+        Humanify.wait(2.5, 3.5);
+        List<WebElement> all = driver.findElements(By.cssSelector("*"));
+        for (WebElement element : all) {
+            if (element.getAttribute("id").contains(prosceniumQualifier)) {
+                 driver.findElement(By.id("player")).click();
+            }
+            if (element.getText().contains(yesNoQualifier)) {
+                element.click();
+                driver.findElement(By.id("demosubmitbutton")).click();
+            }
+        }
+
     }
 
     public static void filterIntro (WebDriver driver) {
         Humanify.wait(2.5, 3.5);
-        List<WebElement> all = driver.findElements(By.cssSelector("*"));
-        System.out.println("---endsource---\n\nNo of elements: "+all.size());
-
-        System.out.println(driver.getPageSource());
+        List<WebElement> all = driver.findElements(By.cssSelector("*"));;
         for (WebElement element : all) {
-
-            try  {
-                String qualifier = element.getText();
-                System.out.println("str: "+qualifier);
-                if (qualifier.contains(yesNoQualifier)) {
-                    element.click();
-                    driver.findElement(By.id("demosubmitbutton")).click();
-                }
-            }catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("no attribute 'id' found");
+            try {
+                System.out.println("text: "+element.getText());
+            } catch (Exception e) {
+                System.out.println("getText cannot be retrieved from element");
             }
+            try {
+                System.out.println("id: "+element.getAttribute("id"));
+            } catch (Exception e) {
+                System.out.println("element has no attribute: id");
+            }
+            try {
+                System.out.println("for: "+element.getAttribute("for"));
+            } catch (Exception e) {
+                System.out.println("element has no attribute: for");
+            }
+            try {
+                System.out.println("class: "+element.getAttribute("class"));
+            } catch (Exception e) {
+                System.out.println("element has no attribute: class");
+            }
+            System.out.println("----END OF ELEMENT----");
         }
-        Humanify.wait(0.3, 0.5);
-        //passPopupButton(driver);
+        System.out.println("----END OF ELEMENT LIST----");
+        System.out.println("total elements: "+all.size());
+        System.out.println("Page source code below:\n\n");
+        System.out.println(driver.getPageSource());
     }
 
     public static void passLowesSurvey (WebDriver driver) {

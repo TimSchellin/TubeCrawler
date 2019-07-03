@@ -15,11 +15,10 @@ public class Humanify {
         } catch (InterruptedException e) {
             if (waitTries < 5){
                 wait(lowerBound, upperBound);
+                waitTries++;
             } else {
                 waitTries = 0;
-                System.err.println("error message--");
-                System.err.println(e.getMessage());
-                System.err.println("--end message\n");
+                System.err.println("failed to wait after 5 attempts");
                 e.printStackTrace();
             }
         }
@@ -27,5 +26,13 @@ public class Humanify {
 
     public static void mouseMove() {
         // nothing yet
+    }
+
+    public static void defeatCapcha() {
+        // haha I cant do that
+
+        // take image of sceen
+        // use classifier network to determine what type of capcha it is
+        // run appropriate gotcha algo
     }
 }
