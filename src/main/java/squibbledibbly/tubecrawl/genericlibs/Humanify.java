@@ -1,5 +1,11 @@
 package squibbledibbly.tubecrawl.genericlibs;
 
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Point;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import java.awt.*;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -24,8 +30,10 @@ public class Humanify {
         }
     }
 
-    public static void mouseMove() {
-        // nothing yet
+    public static void humanMovement(WebDriver driver, float duration) throws Exception {
+        // how mouse moves are executed will depend on operating system
+        String os = System.getProperty("os.name");
+        Robot iRobot = new Robot();
     }
 
     public static void defeatCapcha() {
@@ -34,5 +42,22 @@ public class Humanify {
         // take image of sceen
         // use classifier network to determine what type of capcha it is
         // run appropriate gotcha algo
+    }
+
+    public static void clickOn(WebElement element) throws Exception {
+        Point position = element.getLocation();
+        Dimension size = element.getSize();
+
+
+        int offset = 115;
+
+        String[] prefix = { "pX", "pY", "sW", "sH"};
+        int[] coords = {position.getX(), position.getY(), size.getWidth(), size.getHeight()};
+        for(int i = 0; i < prefix.length; i++) {
+            System.out.println(prefix[i]+" : "+coords[i]);
+        }
+
+        Robot bot = new Robot();
+        bot.mouseMove(coords[0], coords[1]+offset);
     }
 }

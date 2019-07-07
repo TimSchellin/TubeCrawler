@@ -3,7 +3,6 @@ package squibbledibbly.tubecrawl.botlibs.vendors;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import squibbledibbly.tubecrawl.genericlibs.Generic;
 import squibbledibbly.tubecrawl.genericlibs.Humanify;
 
 import java.util.List;
@@ -14,8 +13,8 @@ public class HyperMX {
     Random r = new Random();
 
     private static String yesNoQualifier = "I prefer not to answer";
-    private static String prosceniumQualifier = "proscenium";
-    private static String yahoo_qualifier;
+    private static String prosceniumQualifier = "video";
+    private static String yahoo_qualifier = "webtraffic_popup_start_button";
 
     public static void start (WebDriver driver) {
         decideSequence(driver);
@@ -24,14 +23,25 @@ public class HyperMX {
 
     public static void decideSequence(WebDriver driver){
         Humanify.wait(2.5, 3.5);
+        System.out.println(driver.getPageSource());
         List<WebElement> all = driver.findElements(By.cssSelector("*"));
+
         for (WebElement element : all) {
             if (element.getAttribute("id").contains(prosceniumQualifier)) {
                  driver.findElement(By.id("player")).click();
+                 break;
             }
-            if (element.getText().contains(yesNoQualifier)) {
+            if (element.getText().contains(yesNoQualifier) && element.getAttribute("class").equals("inputlabel")) {
                 element.click();
                 driver.findElement(By.id("demosubmitbutton")).click();
+                passPopupButton(driver);
+                watchLoop1(driver);
+                break;
+            }
+            if (element.getAttribute("id").contains(yahoo_qualifier)) {
+                passPopupButton(driver);
+                watchLoop1(driver);
+                break;
             }
         }
 
@@ -80,10 +90,12 @@ public class HyperMX {
         driver.findElement(By.id("webtraffic_popup_start_button")).click();
     }
 
-    public static void watchLoop (WebDriver driver) {
+    public static void watchLoop1 (WebDriver driver) {
+        String mainWindow = driver.getWindowHandle();
         for (int i = 0; i < 10; i++ ) {
-            if (Generic.elementExists("id", "webtraffic_popup_next_button", driver)) {
-                driver.findElement(By.id("webtraffic_popup_next_button")).click();
+            WebElement next = driver.findElement(By.id("webtraffic_popup_next_button"));
+            if (next.isEnabled()) {
+                next.click();
             } else {
                 Humanify.wait(10.056, 11.32);
             }

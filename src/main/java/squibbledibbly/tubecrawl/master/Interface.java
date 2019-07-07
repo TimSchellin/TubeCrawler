@@ -2,12 +2,15 @@ package squibbledibbly.tubecrawl.master;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import squibbledibbly.tubecrawl.botlibs.instagc.Navigate;
 import squibbledibbly.tubecrawl.botlibs.vendors.HyperMX;
+import squibbledibbly.tubecrawl.genericlibs.Humanify;
 import squibbledibbly.tubecrawl.genericlibs.Web;
 
+import java.awt.*;
 import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
@@ -20,23 +23,42 @@ public class Interface {
 
     public static void main(String[] args) {
         System.out.println("main");
+
         try {
-            while (count == 0){
-                if (Web.isConnected()) {
-                    mainProcedure();
-                    //test();
-                    System.out.println(count);
-                    count++;
-                }
-                TimeUnit.MINUTES.sleep(5);
-            }
+
+            /* ====================================================================================================== */
+
+            //normalStart();
+            test();
+
+            /* ====================================================================================================== */
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private static void test () throws Exception {
-        verifyIP();
+        WebDriver driver = createDriver();
+        //driver.manage().window().setSize(new Dimension(1024, 768));
+        driver.get("https://www.google.com/");
+        WebElement element = driver.findElement(By.xpath("//*[@id=\"tsf\"]/div[2]/div/div[3]/center/input[1]"));
+        Humanify.clickOn(element);
+
+        //driver.manage().window().maximize
+
+    }
+
+    private static void normalStart() throws Exception {
+        while (count == 0){
+            if (Web.isConnected()) {
+                mainProcedure();
+                //test();
+                System.out.println(count);
+                count++;
+            }
+            TimeUnit.MINUTES.sleep(5);
+        }
     }
 
     private static void mainProcedure() throws Exception {
@@ -44,9 +66,10 @@ public class Interface {
 
         verifyIP();
         instalogin(driver);
-        while (true) {
+        while (true) {  // Need to mix up some human activity here.
             navToHyperMX(driver);
             hyperWatch(driver);
+
         }
     }
 
@@ -61,10 +84,12 @@ public class Interface {
         Navigate.gotoHyperMX(driver);
     }
 
-    private static void hyperWatch(WebDriver driver) {
+    private static void hyperWatch(WebDriver driver) throws Exception {
         Navigate.switchIframeHyperMX(driver);
         HyperMX.start(driver);
         Navigate.leaveIframe(driver);
+
+        Robot iRobot = new Robot();
 
     }
 
@@ -86,16 +111,37 @@ public class Interface {
             System.out.println("IP is good");
             username = "SenatorGooslings";
             password = "2!vnd7TgfSxU";
+        } else if (myIP.equals("97.93.136.204")) {
+            System.out.println("IP is good");
+            username = "SquibbleDibbly";
+            password = "vhuZ8WY8K6BiS7E";
         } else if (myIP.equals("174.211.7.112")) {
             System.out.println("IP is good");
             username = "IntimateDentist";
             password = "iF39#zJojnLS";
+        } else if (myIP.equals("71.93.212.128")) {
+            System.out.println("IP is good");
+            username = "loungePeacocks";
+            password = "@58yk7H%jJ9u";
         } else {
             System.out.println("IP is bad");
             System.out.println("IP: "+myIP);
         }
     }
-
-
 }
+
+/*
+
+=== DISCARDED TEST METHODS GO HERE =====================================================================================
+
+
+
+
+
+
+
+
+
+
+ */
 
