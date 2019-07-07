@@ -30,7 +30,40 @@ public class Generic {
             }
         } catch (NoSuchElementException e){
             return false;
+            // LOG element not found
         }
         return true;
+    }
+
+    public static int hoursToMillis(double hours) {
+        return (int) (hours * 3600000.0);
+    }
+
+    public static double millisToHours(int millis) {
+        return ((double) millis) / (3600000.0);
+    }
+
+    public static double randGuassian(double min, double max) {
+        return 0.0;
+    }
+
+    public static double randLogistic(double min, double max) {
+        return 0.0;
+    }
+
+    public static double randSkewedGuassian(double min, double max, double mean) {
+        return 0.0;
+    }
+
+    public static double randCustomDistribution(double min, double max, double mean, double std) {
+        return 0.0;
+    }
+
+    public static double rDoubleInRange(double min, double max) {
+        return 0.0;
+    }
+
+    public static int rIntInRange(int min, int max) {
+        return 0;
     }
 }

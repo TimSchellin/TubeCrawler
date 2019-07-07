@@ -60,4 +60,31 @@ public class Humanify {
         Robot bot = new Robot();
         bot.mouseMove(coords[0], coords[1]+offset);
     }
+
+    public static void mouseMove(java.awt.Point pos) {
+        // does not include buffer times
+    }
+
+    public static void humanLeftClick() {
+        // wait a few random milliseconds before pressing
+        // click - ie "press down"
+        // release after a few random milliseconds
+        // cool down a few milliseconds
+    }
+
+    public static void moveThenClick(java.awt.Point pos) {
+
+    }
+
+    public static void mouseFlourish() {
+        // nothing
+    }
+
+    public static void mouseScroll() {
+        // nothing
+    }
+
+    public static void scrollToTop() {
+        // nothing
+    }
 }
